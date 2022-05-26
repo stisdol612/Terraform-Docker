@@ -21,7 +21,7 @@ resource "docker_image" "nodered_image" {
 
 resource "random_string" "random" {
   count   = var.container_count
-  length  = 4
+  length  = 3
   special = false
   upper   = false
 }
