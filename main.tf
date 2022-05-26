@@ -9,6 +9,12 @@ terraform {
 
 provider "docker" {}
 
+resource "null_resource" "dockervol" {
+  provisioner "local-exec" {
+    command = "mkdir noderedvol/ || true && chown -R 1000:1000 noderedvol/"
+  }
+}
+
 resource "docker_image" "nodered_image" {
   name = "nodered/node-red:latest"
 }
@@ -27,6 +33,10 @@ resource "docker_container" "nodered_container" {
   ports {
     internal = var.int_port
     external = var.ext_port
+  }
+  volumes {
+    container_path = "/data"
+    host_path = "/home/ubuntu/environment/terraform-docker/noderedvol"
   }
 }
 
