@@ -16,7 +16,7 @@ resource "null_resource" "dockervol" {
 }
 
 resource "docker_image" "nodered_image" {
-  name = "nodered/node-red:latest"
+  name = var.image[terraform.workspace]
 }
 
 resource "random_string" "random" {
@@ -28,15 +28,15 @@ resource "random_string" "random" {
 
 resource "docker_container" "nodered_container" {
   count = local.container_count
-  name  = join("-", ["nodered", random_string.random[count.index].result])
+  name  = join("-", ["nodered", terraform.workspace, random_string.random[count.index].result])
   image = docker_image.nodered_image.latest
   ports {
     internal = var.int_port
-    external = var.ext_port[count.index]
+    external = var.ext_port[terraform.workspace][count.index]
   }
   volumes {
     container_path = "/data"
-    host_path = "/home/ubuntu/environment/terraform-docker/noderedvol"
+    host_path = "${path.cwd}/noderedvol"
   }
 }
 
