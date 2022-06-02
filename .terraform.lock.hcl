@@ -41,7 +41,7 @@ provider "registry.terraform.io/hashicorp/random" {
 
 provider "registry.terraform.io/kreuzwerker/docker" {
   version     = "2.16.0"
-  constraints = "~> 2.12"
+  constraints = "~> 2.16.0"
   hashes = [
     "h1:OcTn2QyCQNjDiJYy1vqQFmz2dxJdOF/2/HBXBvGxU2E=",
     "zh:0ff8aa7884c6dae90e6f245bb9d37898735f89e095ba53413f2f364db4d11a77",
